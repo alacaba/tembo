@@ -52,6 +52,9 @@ def print_activity():
 
     print("Curriculum Complete!")
 
+def age_groups():
+    return [ activity['age'] for activity in activities ]
+
 def add_age_group(age):
     age_group = { 'age': age, 'activity': list() }
     activities.append(age_group)
@@ -61,8 +64,7 @@ def add_parent():
     childName = input("Enter your child's name: ")
     age       = int(input("Enter your child's age: "))
     child = { 'childName': childName, 'age': int(age) }
-    ages = [ activity['age'] for activity in activities ]
-    if age not in ages:
+    if age not in age_groups():
         add_age_group(age)
     parents[parent] = child
     return parents[parent]
@@ -76,24 +78,31 @@ def get_activity_by_age(age):
 
 def add_activity():
     age = int(input("Enter child's age group: "))
-    add_more = True
+    if age not in age_groups():
+        add_age_group(age)
 
-    while add_more:
-        activity = input("Enter activity for age group %d: \n" % age)
-        activities = get_activity_by_age(age)
-        activities.append(activity)
-        should_add_more = input("Do you want to add another activity? (y/n): ")
-        if should_add_more == 'n':
-            add_more = False
+    activity = input("Enter activity for age group %d: \n" % age)
+    activities = get_activity_by_age(age)
+    print(activities)
+    activities.append(activity)
+
+def loop(func, data):
+    cont = True
+
+    while cont == True:
+        func()
+        answer = input("Do you want to add another %s? (y/n): " % data)
+        if answer == 'n':
+            cont = False
 
 def run():
     add_new_parent = input("Do you want to add a parent? (y/n): ")
     if add_new_parent == 'y':
-        add_parent()
+        loop(add_parent, 'parent')
 
     add_new_activity = input("Do you want to add activity? (y/n): ")
     if add_new_activity == 'y':
-        add_activity()
+        loop(add_activity, 'activity')
 
     print("Welcome to Tembo curriculum checker")
     print("")
