@@ -59,7 +59,23 @@ def add_age_group(age):
     age_group = { 'age': age, 'activity': list() }
     activities.append(age_group)
 
-def add_parent():
+def get_activity_by_age(age):
+    for activity in activities:
+        if activity['age'] == age:
+            return activity.get('activity', [])
+
+def add_activity(age, activity):
+    if age not in age_groups():
+        add_age_group(age)
+    atvs = get_activity_by_age(age)
+    atvs.append(activity)
+
+def add_parent(parent, child):
+    if child['age'] not in age_groups():
+        add_age_group(child['age'])
+    parents[parent] = child
+
+def add_parent_input():
     print("Enter parent name: ")
     parent = input("> ")
     print("Enter child's name: ")
@@ -67,26 +83,14 @@ def add_parent():
     print("Enter child's age: ")
     age = int(input("> "))
     child = { 'childName': childName, 'age': int(age) }
-    if age not in age_groups():
-        add_age_group(age)
-    parents[parent] = child
+    add_parent(parent, child)
 
-def get_activity_by_age(age):
-    for activity in activities:
-        if activity['age'] == age:
-            return activity.get('activity', [])
-
-
-def add_activity():
+def add_activity_input():
     print("Enter child's age group: ")
     age = int(input("> "))
-    if age not in age_groups():
-        add_age_group(age)
-
     print("Enter activity for age group %d:" % age)
     activity = input("> ")
-    activities = get_activity_by_age(age)
-    activities.append(activity)
+    add_activity(age, activity)
 
 def loop(func, data):
     cont = True
@@ -112,9 +116,9 @@ def prompt():
     selection = input("select: (a/b/c/q(quit)): ")
 
     if selection == 'a':
-        loop(add_parent, 'parent')
+        loop(add_parent_input, 'parent')
     elif selection == 'b':
-        loop(add_activity, 'activity')
+        loop(add_activity_input, 'activity')
     elif selection == 'c':
         print_activity()
     elif selection == 'q':
@@ -125,4 +129,6 @@ def prompt():
         prompt()
 
 
-prompt()
+if __name__ == '__main__':
+    prompt()
+

@@ -8,3 +8,6 @@
 
 > python3 tembo.py
 
+## run the tests
+
+> python3 tembo_test.py
