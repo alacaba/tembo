@@ -35,26 +35,25 @@ activities = [
     }
 ]
 
-def print_activity(parent={}):
-    child = None
-    age = parent.get('age', 0)
+def print_activity():
+    print("Printing Activities....\n")
 
-    for activity in activities:
-        if age == activity['age']:
-            child = activity
+    ac_length = [ len(ac['activity']) for ac in activities]
 
-    if child:
-        print("Activities for %s age %d:" % (parent['childName'], age))
+    for i in range(max(ac_length)):
+        for parent, child in parents.items():
+            activity_list = get_activity_by_age(child.get('age', 0))
+            try:
+                if activity_list:
+                    print("%s's child %s aged %d: %s \n" %
+                            (parent, child['childName'], child['age'], activity_list[i]))
+            except IndexError:
+                next
 
-        for activity in child['activity']:
-            print(activity)
-        print("Curriculum complete!")
-
-    else:
-        print("There are no curriculum for this child age.")
+    print("Curriculum Complete!")
 
 def add_age_group(age):
-    age_group = { 'age': age, activity: list() }
+    age_group = { 'age': age, 'activity': list() }
     activities.append(age_group)
 
 def add_parent():
@@ -97,13 +96,10 @@ def run():
         add_activity()
 
     print("Welcome to Tembo curriculum checker")
-    parents_list = list(parents.keys())
-    parent_name = input("Enter parent name to view their child's curriculum: \
-            \nSelect parent: (%s) \n" % ', '.join(parents_list))
     print("")
     print("=========================================")
     print("")
-    print_activity(parents[parent_name.capitalize()])
+    print_activity()
     print("")
     print("=========================================")
 
