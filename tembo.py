@@ -60,15 +60,16 @@ def add_age_group(age):
     activities.append(age_group)
 
 def add_parent():
-    parent    = input("Enter parent name: ")
-    childName = input("Enter your child's name: ")
-    age       = int(input("Enter your child's age: "))
+    print("Enter parent name: ")
+    parent = input("> ")
+    print("Enter child's name: ")
+    childName = input("> ")
+    print("Enter child's age: ")
+    age = int(input("> "))
     child = { 'childName': childName, 'age': int(age) }
     if age not in age_groups():
         add_age_group(age)
     parents[parent] = child
-    return parents[parent]
-
 
 def get_activity_by_age(age):
     for activity in activities:
@@ -77,11 +78,13 @@ def get_activity_by_age(age):
 
 
 def add_activity():
-    age = int(input("Enter child's age group: "))
+    print("Enter child's age group: ")
+    age = int(input("> "))
     if age not in age_groups():
         add_age_group(age)
 
-    activity = input("Enter activity for age group %d: \n" % age)
+    print("Enter activity for age group %d:" % age)
+    activity = input("> ")
     activities = get_activity_by_age(age)
     activities.append(activity)
 
@@ -94,21 +97,32 @@ def loop(func, data):
         if answer == 'n':
             cont = False
 
-def run():
-    add_new_parent = input("Do you want to add a parent? (y/n): ")
-    if add_new_parent == 'y':
+    prompt()
+
+def prompt():
+    print("Welcome to Tembo curriculum checker \n")
+
+    print("What do you want to do?")
+    print("")
+    print("a.) Add parent")
+    print("b.) Add activity")
+    print("c.) Print parents and activities")
+    print("")
+
+    selection = input("select: (a/b/c/q(quit)): ")
+
+    if selection == 'a':
         loop(add_parent, 'parent')
-
-    add_new_activity = input("Do you want to add activity? (y/n): ")
-    if add_new_activity == 'y':
+    elif selection == 'b':
         loop(add_activity, 'activity')
+    elif selection == 'c':
+        print_activity()
+    elif selection == 'q':
+        print("Exiting application")
+        exit()
+    else:
+        print("Please select one from the choices")
+        prompt()
 
-    print("Welcome to Tembo curriculum checker")
-    print("")
-    print("=========================================")
-    print("")
-    print_activity()
-    print("")
-    print("=========================================")
 
-run()
+prompt()
