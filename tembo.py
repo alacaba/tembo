@@ -55,9 +55,13 @@ def add_parent():
     parent    = input("Enter parent name: ")
     childName = input("Enter your child's name: ")
     age       = input("Enter your child's age: ")
-    child = { 'childName': childName, 'age': age }
+    child = { 'childName': childName, 'age': int(age) }
     parents[parent] = child
+    return parents[parent]
 
+def add_activity(age):
+    if age is None:
+        print("Please enter an age")
 parent = input("Enter parent: ")
 print_activity(parents[parent])
 add_parent()
