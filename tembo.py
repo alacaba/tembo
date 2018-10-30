@@ -51,6 +51,15 @@ def print_activity(parent={}):
     else:
         print("There are no curriculum for this child age.")
 
+def add_parent():
+    parent    = input("Enter parent name: ")
+    childName = input("Enter your child's name: ")
+    age       = input("Enter your child's age: ")
+    child = { 'childName': childName, 'age': age }
+    parents[parent] = child
+
 parent = input("Enter parent: ")
 print_activity(parents[parent])
+add_parent()
+print(parents)
 
