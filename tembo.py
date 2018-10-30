@@ -59,11 +59,33 @@ def add_parent():
     parents[parent] = child
     return parents[parent]
 
-def add_activity(age):
-    if age is None:
-        print("Please enter an age")
-parent = input("Enter parent: ")
-print_activity(parents[parent])
-add_parent()
-print(parents)
 
+def get_activity_by_age(age):
+    for activity in activities:
+        if activity['age'] == age:
+            return activity.get('activity', [])
+
+
+def add_activity():
+    age = input("Enter child's age group: ")
+    age = int(age)
+    add_more = True
+
+    while add_more:
+        activity = input("Enter activity for age group %d: \n" % age)
+        activities = get_activity_by_age(age)
+        activities.append(activity)
+        should_add_more = input("Do you want to add another activity? (y/n): ")
+        if should_add_more == 'n':
+            add_more = False
+
+
+
+
+# parent = input("Enter parent: ")
+# print_activity(parents[parent])
+# add_parent()
+# print(parents)
+
+add_activity()
+print(activities)
