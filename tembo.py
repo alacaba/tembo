@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 parents = {
     'Henry': {'childName': 'Calvin', 'age': 1},
@@ -83,7 +83,6 @@ def add_activity():
 
     activity = input("Enter activity for age group %d: \n" % age)
     activities = get_activity_by_age(age)
-    print(activities)
     activities.append(activity)
 
 def loop(func, data):
