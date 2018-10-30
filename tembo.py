@@ -53,11 +53,18 @@ def print_activity(parent={}):
     else:
         print("There are no curriculum for this child age.")
 
+def add_age_group(age):
+    age_group = { 'age': age, activity: list() }
+    activities.append(age_group)
+
 def add_parent():
     parent    = input("Enter parent name: ")
     childName = input("Enter your child's name: ")
-    age       = input("Enter your child's age: ")
+    age       = int(input("Enter your child's age: "))
     child = { 'childName': childName, 'age': int(age) }
+    ages = [ activity['age'] for activity in activities ]
+    if age not in ages:
+        add_age_group(age)
     parents[parent] = child
     return parents[parent]
 
@@ -69,8 +76,7 @@ def get_activity_by_age(age):
 
 
 def add_activity():
-    age = input("Enter child's age group: ")
-    age = int(age)
+    age = int(input("Enter child's age group: "))
     add_more = True
 
     while add_more:
