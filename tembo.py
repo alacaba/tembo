@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 parents = {
     'Henry': {'childName': 'Calvin', 'age': 1},
     'Ada': {'childName': 'Lily', 'age': 4},
@@ -35,14 +37,14 @@ activities = [
 
 def print_activity(parent={}):
     child = None
+    age = parent.get('age', 0)
 
     for activity in activities:
-        age = parent.get('age', 0)
         if age == activity['age']:
             child = activity
 
     if child:
-        print("Activities for age %d:" % child['age'])
+        print("Activities for %s age %d:" % (parent['childName'], age))
 
         for activity in child['activity']:
             print(activity)
@@ -79,13 +81,24 @@ def add_activity():
         if should_add_more == 'n':
             add_more = False
 
+def run():
+    add_new_parent = input("Do you want to add a parent? (y/n): ")
+    if add_new_parent == 'y':
+        add_parent()
 
+    add_new_activity = input("Do you want to add activity? (y/n): ")
+    if add_new_activity == 'y':
+        add_activity()
 
+    print("Welcome to Tembo curriculum checker")
+    parents_list = list(parents.keys())
+    parent_name = input("Enter parent name to view their child's curriculum: \
+            \nSelect parent: (%s) \n" % ', '.join(parents_list))
+    print("")
+    print("=========================================")
+    print("")
+    print_activity(parents[parent_name.capitalize()])
+    print("")
+    print("=========================================")
 
-# parent = input("Enter parent: ")
-# print_activity(parents[parent])
-# add_parent()
-# print(parents)
-
-add_activity()
-print(activities)
+run()
