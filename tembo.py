@@ -69,11 +69,13 @@ def add_activity(age, activity):
         add_age_group(age)
     atvs = get_activity_by_age(age)
     atvs.append(activity)
+    print("Activity added!")
 
 def add_parent(parent, child):
     if child['age'] not in age_groups():
         add_age_group(child['age'])
     parents[parent] = child
+    print("Parent added!")
 
 def add_parent_input():
     print("Enter parent name: ")
