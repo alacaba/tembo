@@ -20,5 +20,15 @@ class TestAddActivityAndParentMethods(unittest.TestCase):
         ages = [ atvs['age'] for atvs in activities ]
         self.assertIn(age, ages)
 
+    def test_activity_by_age(self):
+        age = 3
+        atvs = get_activity_by_age(age)
+        result = [
+            'Build with blocks.',
+            'Try a simple puzzle.',
+            'Read a story together.'
+        ]
+        self.assertEqual(atvs, result)
+
 if __name__ == '__main__':
     unittest.main()

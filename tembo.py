@@ -35,45 +35,44 @@ activities = [
     }
 ]
 
+def print_activity_index(index):
+    def print_atv(child, parent):
+        try:
+            activity_list = get_activity_by_age(child.get('age', 0))
+            params = (parent, child['childName'], child['age'], activity_list[index])
+            print("%s's child %s aged %d: %s \n" % params)
+        except IndexError:
+            pass # ignore
+    return print_atv
+
 def print_activity():
     print("Printing Activities....\n")
 
-    ac_length = [ len(ac['activity']) for ac in activities]
-
-    for i in range(max(ac_length)):
-        for parent, child in parents.items():
-            activity_list = get_activity_by_age(child.get('age', 0))
-            try:
-                if activity_list:
-                    print("%s's child %s aged %d: %s \n" %
-                            (parent, child['childName'], child['age'], activity_list[i]))
-            except IndexError:
-                next
+    max_activities = max([ len(ac['activity']) for ac in activities ])
+    printers = map(print_activity_index, range(max_activities))
+    [ [ printer(child, parent) for parent, child in parents.items() ] for printer in printers ]
 
     print("Curriculum Complete!")
 
-def age_groups():
-    return [ activity['age'] for activity in activities ]
-
 def add_age_group(age):
-    age_group = { 'age': age, 'activity': list() }
-    activities.append(age_group)
+    age_groups = [ activity['age'] for activity in activities ]
+    if age not in age_groups:
+        age_group = { 'age': age, 'activity': list() }
+        activities.append(age_group)
 
 def get_activity_by_age(age):
-    for activity in activities:
-        if activity['age'] == age:
-            return activity.get('activity', [])
+    filter_activity = lambda x: x['age'] == age
+    atvs = filter(filter_activity, activities)
+    return list(atvs)[0].get('activity', [])
 
 def add_activity(age, activity):
-    if age not in age_groups():
-        add_age_group(age)
+    add_age_group(age)
     atvs = get_activity_by_age(age)
     atvs.append(activity)
     print("Activity added!")
 
 def add_parent(parent, child):
-    if child['age'] not in age_groups():
-        add_age_group(child['age'])
+    add_age_group(child['age'])
     parents[parent] = child
     print("Parent added!")
 
